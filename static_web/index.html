@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TAFARA RUGARA - Cloud Engineer Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: #333;
+            background: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        header {
+            background: #2c3e50;
+            color: #fff;
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin: 0;
+        }
+
+        header nav {
+            margin-top: 20px;
+        }
+
+        header nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        header nav a:hover {
+            color: #18bc9c;
+        }
+
+        section {
+            padding: 40px 20px;
+            margin: 20px auto;
+            max-width: 800px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            color: #2c3e50;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            color: #18bc9c;
+            font-size: 1.5rem;
+            margin-top: 30px;
+        }
+
+        p {
+            font-size: 1.1rem;
+            color: #555;
+        }
+
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .skill-item {
+            background: #18bc9c;
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            transition: transform 0.3s, background 0.3s;
+        }
+
+        .skill-item:hover {
+            transform: translateY(-3px);
+            background: #2c3e50;
+        }
+
+        .divider {
+            height: 1px;
+            background: #ddd;
+            margin: 30px 0;
+        }
+
+        a {
+            color: #18bc9c;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            color: #2c3e50;
+            text-decoration: underline;
+        }
+
+        /* Typewriter Effect */
+        .typewriter {
+            display: inline-block;
+            overflow: hidden;
+            border-right: 0.15em solid #18bc9c;
+            white-space: nowrap;
+            margin: 0 auto;
+            letter-spacing: 0.15em;
+            animation: blink-caret 0.75s step-end infinite;
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: #18bc9c; }
+        }
+
+        /* Visitor Counter Styles */
+        #visitor-counter {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 1.2rem;
+            color: #2c3e50;
+        }
+        #visitor-count {
+            font-weight: bold;
+            color: #18bc9c;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            section {
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 1.8rem;
+            }
+
+            h3 {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const texts = [
+                "Welcome to Tafara Rugara's Cloud Engineering Portfolio.",
+                "AWS Certified Cloud Practitioner.",
+                "Passionate about Cloud Technologies and DevOps."
+            ];
+            let index = 0;
+            const typewriterElement = document.getElementById('typewriter');
+            let isDeleting = false;
+            let text = '';
+            let typingSpeed = 100; // Typing speed (faster)
+            let deletingSpeed = 50; // Deleting speed (faster)
+            let pauseDuration = 1000; // Pause between texts
+
+            function type() {
+                const currentText = texts[index];
+                if (isDeleting) {
+                    text = currentText.substring(0, text.length - 1);
+                } else {
+                    text = currentText.substring(0, text.length + 1);
+                }
+
+                typewriterElement.textContent = text;
+
+                if (!isDeleting && text === currentText) {
+                    // Pause at the end of typing
+                    setTimeout(() => {
+                        isDeleting = true;
+                        type();
+                    }, pauseDuration);
+                } else if (isDeleting && text === '') {
+                    // Move to the next text
+                    isDeleting = false;
+                    index = (index + 1) % texts.length;
+                    setTimeout(type, 500); // Short pause before typing the next text
+                } else {
+                    // Continue typing or deleting
+                    const speed = isDeleting ? deletingSpeed : typingSpeed;
+                    setTimeout(type, speed);
+                }
+            }
+
+            type();
+        });
+    </script>
+</head>
+<body>
+
+<header>
+    <h1>TAFARA RUGARA</h1>
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#certifications">Certifications</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+    </nav>
+</header>
+
+<!-- Visitor Counter -->
+<div id="visitor-counter">
+    <p>You are visitor number: <span id="visitor-count">Loading...</span></p>
+</div>
+
+<section id="home">
+    <h2>Home</h2>
+    <p id="typewriter" class="typewriter"></p>
+</section>
+
+<section id="about">
+    <h2>About Me</h2>
+    <p>I am a self-taught Cloud Engineer with a passion for designing scalable, secure, and efficient cloud solutions. My expertise lies in AWS, Infrastructure as Code (IaC), and DevOps practices. I am committed to continuous learning and leveraging cutting-edge technologies to solve real-world problems.</p>
+</section>
+
+<section id="skills">
+    <h2>Skills</h2>
+    <div class="skills">
+        <div class="skill-item">AWS Cloud Services</div>
+        <div class="skill-item">Terraform (IaC)</div>
+        <div class="skill-item">Linux & Bash Scripting</div>
+        <div class="skill-item">CI/CD Pipelines</div>
+        <div class="skill-item">Networking</div>
+        <div class="skill-item">Docker</div>
+        <div class="skill-item">Git & GitHub Actions</div>
+        <div class="skill-item">Server Administration</div>
+    </div>
+</section>
+
+<section id="certifications">
+    <h2>Certifications</h2>
+    <p>AWS Certified Cloud Practitioner</p>
+    <p>Currently pursuing AWS Solutions Architect Associate and AWS Developer certifications.</p>
+</section>
+
+<section id="projects">
+    <h2>Projects</h2>
+
+    <h3>1. Virtualization Project</h3>
+    <p><strong>Goal:</strong> To automate the creation and management of Virtual Machines (VMs) using Vagrant and VirtualBox, simulating a real-world cloud environment.</p>
+    <p><strong>Why:</strong> Virtualization is a foundational skill in cloud engineering. This project demonstrates my ability to automate infrastructure provisioning and manage virtualized environments.</p>
+    <p><strong>Steps:</strong></p>
+    <ul>
+        <li>Used Vagrant to define VM configurations in a Ruby-based Vagrantfile, enabling reproducible and version-controlled infrastructure.</li>
+        <li>Configured static IPs, bridged networking, and resource allocation (RAM, CPU cores) to mimic production environments.</li>
+        <li>Deployed an HTTPD server on the VM and hosted a custom static website, showcasing my ability to manage web servers.</li>
+        <li>Documented the process and created a YouTube tutorial series to share my knowledge with the community.</li>
+    </ul>
+    <p><strong>Skills Demonstrated:</strong> VM automation, scripting, server management, networking, and technical communication.</p>
+
+    <div class="divider"></div>
+
+    <h3>2. AWS Cloud Resume Challenge with Terraform and CI/CD</h3>
+    <p><strong>Goal:</strong> To build a serverless resume website hosted on AWS, using Infrastructure as Code (Terraform) and automated CI/CD pipelines.</p>
+    <p><strong>Why:</strong> This project showcases my ability to design and deploy scalable, secure, and maintainable cloud solutions using modern DevOps practices.</p>
+    <p><strong>Steps:</strong></p>
+    <ul>
+        <li><strong>Terraform (IaC):</strong> Wrote Terraform scripts to provision AWS resources (S3, CloudFront, Route 53, Lambda, DynamoDB, API Gateway) in a repeatable and version-controlled manner.</li>
+        <li><strong>CI/CD with GitHub Actions:</strong> Set up a CI/CD pipeline to automatically deploy changes to the website whenever code is pushed to the GitHub repository.</li>
+        <li><strong>Serverless Backend:</strong> Used AWS Lambda and DynamoDB to create a visitor counter, demonstrating my ability to build serverless applications.</li>
+        <li><strong>Security:</strong> Implemented IAM roles, S3 bucket policies, and HTTPS to ensure the website is secure and compliant with best practices.</li>
+    </ul>
+    <p><strong>Skills Demonstrated:</strong> Cloud architecture, Terraform, CI/CD, serverless computing, and security.</p>
+</section>
+
+<section id="contact">
+    <h2>Contact Me</h2>
+    <p><strong>Email:</strong> <a href="mailto:tfrsuperfx@gmail.com">tfrsuperfx@gmail.com</a></p>
+    <p><strong>Phone:</strong> +263 777 553 271</p>
+    <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/tafara-rugara-0627b819b">linkedin.com/in/tafara-rugara</a></p>
+    <p><strong>GitHub:</strong> <a href="https://github.com/98Devops">github.com/98Devops</a></p>
+    <p><strong>YouTube:</strong> <a href="https://www.youtube.com/@techwithtaf/playlists">Tech with Tafara</a></p>
+</section>
+
+<script>
+    // JavaScript Code for Visitor Counter
+    const counter = document.querySelector('#visitor-count'); // Select the element to display the visitor count
+    async function updateCounter() {
+        try {
+            let response = await fetch("https://63ykatqjy6om6a26n26jvj772q0rayxx.lambda-url.af-south-1.on.aws/"); // Fetch data from Lambda function
+            let data = await response.json(); // Parse the JSON response
+
+            // Ensure the response contains the visitor count
+            if (data && data.visitorCount) {
+                counter.innerHTML = data.visitorCount; // Update the element with the visitor count
+            } else {
+                console.error("Invalid response format:", data); // Log if the response format is unexpected
+                counter.innerHTML = "Error loading count"; // Display error message
+            }
+        } catch (error) {
+            console.error("Error fetching visitor count:", error); // Log any errors
+            counter.innerHTML = "Error loading count"; // Display error message
+        }
+    }
+
+    updateCounter(); // Call the function to update the visitor count
+</script>
+</body>
+</html>
