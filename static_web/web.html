@@ -300,23 +300,24 @@
 
 <script>
     // JavaScript Code for Visitor Counter
-    const counter = document.querySelector('#visitor-count'); // Select the element to display the visitor count
-    async function updateCounter() {
-        try {
-            let response = await fetch("https://63ykatqjy6om6a26n26jvj772q0rayxx.lambda-url.af-south-1.on.aws/"); // Fetch data from Lambda function
-            let data = await response.json(); // Parse the JSON response
+   const counter = document.querySelector('#visitor-count');
 
-            // Ensure the response contains the visitor count
-            if (data && data.views) {
-                counter.innerHTML = data.views; // Updated key from 'visitorCount' to 'views'
-            } else {
-                console.error("Invalid response format:", data); // Log if the response format is unexpected
-                counter.innerHTML = "Error loading count"; // Display error message
-            }
-        } catch (error) {
-            console.error("Error fetching visitor count:", error); // Log any errors
-            counter.innerHTML = "Error loading count"; // Display error message
+async function updateCounter() {
+    try {
+        const response = await fetch("https://your-lambda-url.on.aws/");
+        const data = await response.json();
+
+        if (data && data.views !== undefined) {
+            counter.textContent = data.views;
+        } else {
+            counter.textContent = "Error loading count";
         }
+    } catch (error) {
+        console.error("Fetch error:", error);
+        counter.textContent = "Error loading count";
+    }
+}
+
     }
 
     updateCounter(); // Call the function to update the visitor count
