@@ -307,8 +307,8 @@
             let data = await response.json(); // Parse the JSON response
 
             // Ensure the response contains the visitor count
-            if (data && data.visitorCount) {
-                counter.innerHTML = data.visitorCount; // Update the element with the visitor count
+            if (data && data.views) {
+                counter.innerHTML = data.views; // Updated key from 'visitorCount' to 'views'
             } else {
                 console.error("Invalid response format:", data); // Log if the response format is unexpected
                 counter.innerHTML = "Error loading count"; // Display error message
@@ -321,5 +321,3 @@
 
     updateCounter(); // Call the function to update the visitor count
 </script>
-</body>
-</html>
