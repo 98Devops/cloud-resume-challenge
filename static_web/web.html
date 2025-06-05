@@ -300,23 +300,17 @@
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    const counter = document.getElementById("visitor-count");
-
-    fetch("https://63ykatqjy6om6a26n26jvj772q0rayxx.lambda-url.af-south-1.on.aws//")
+    fetch("https://63ykatqjy6om6a26n26jvj772q0rayxx.lambda-url.af-south-1.on.aws/") // ✅ Replace with actual endpoint
       .then(response => response.json())
       .then(data => {
-        if (data && data.views !== undefined) {
-          counter.textContent = data.views;
-        } else {
-          counter.textContent = "Error";
-        }
+        document.getElementById("visitor-count").textContent = data.views;
       })
-      .catch(err => {
-        console.error("Fetch failed:", err);
-        counter.textContent = "Error";
+      .catch(error => {
+        console.error("Error fetching views:", error);
       });
   });
 </script>
+
 
 
     updateCounter(); // Call the function to update the visitor count
