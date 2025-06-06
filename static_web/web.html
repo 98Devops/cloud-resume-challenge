@@ -116,7 +116,7 @@
             text-decoration: underline;
         }
 
-        /* Typewriter Effect */
+        /* Typewriter Effect - mobile optimized */
         .typewriter {
             display: inline-block;
             overflow: hidden;
@@ -125,6 +125,15 @@
             margin: 0 auto;
             letter-spacing: 0.15em;
             animation: blink-caret 0.75s step-end infinite;
+            font-size: 1.3em;
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+        @media (max-width: 500px) {
+            .typewriter {
+                font-size: 1em !important;
+                max-width: 90vw;
+            }
         }
 
         @keyframes blink-caret {
@@ -149,34 +158,43 @@
             header h1 {
                 font-size: 2rem;
             }
-
             section {
                 padding: 20px;
             }
-
             h2 {
                 font-size: 1.8rem;
             }
-
             h3 {
                 font-size: 1.3rem;
             }
         }
+        @media (max-width: 500px) {
+            body { padding: 0 2vw; }
+        }
     </style>
+
+    <!-- Typewriter JS - mobile/desktop optimized -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const texts = [
+            const desktopTexts = [
                 "Welcome to Tafara Rugara's Cloud Engineering Portfolio.",
                 "AWS Certified Cloud Practitioner.",
                 "Passionate about Cloud Technologies and DevOps."
             ];
+            const mobileTexts = [
+                "Tafara Rugara: Cloud Engineer.",
+                "AWS Certified.",
+                "Cloud & DevOps Enthusiast."
+            ];
+            const isMobile = window.innerWidth <= 500;
+            const texts = isMobile ? mobileTexts : desktopTexts;
             let index = 0;
             const typewriterElement = document.getElementById('typewriter');
             let isDeleting = false;
             let text = '';
-            let typingSpeed = 100; // Typing speed (faster)
-            let deletingSpeed = 50; // Deleting speed (faster)
-            let pauseDuration = 1000; // Pause between texts
+            let typingSpeed = isMobile ? 50 : 100;
+            let deletingSpeed = isMobile ? 25 : 50;
+            let pauseDuration = isMobile ? 700 : 1000;
 
             function type() {
                 const currentText = texts[index];
@@ -185,27 +203,18 @@
                 } else {
                     text = currentText.substring(0, text.length + 1);
                 }
-
                 typewriterElement.textContent = text;
 
                 if (!isDeleting && text === currentText) {
-                    // Pause at the end of typing
-                    setTimeout(() => {
-                        isDeleting = true;
-                        type();
-                    }, pauseDuration);
+                    setTimeout(() => { isDeleting = true; type(); }, pauseDuration);
                 } else if (isDeleting && text === '') {
-                    // Move to the next text
                     isDeleting = false;
                     index = (index + 1) % texts.length;
-                    setTimeout(type, 500); // Short pause before typing the next text
+                    setTimeout(type, 400);
                 } else {
-                    // Continue typing or deleting
-                    const speed = isDeleting ? deletingSpeed : typingSpeed;
-                    setTimeout(type, speed);
+                    setTimeout(type, isDeleting ? deletingSpeed : typingSpeed);
                 }
             }
-
             type();
         });
     </script>
@@ -298,22 +307,42 @@
     <p><strong>YouTube:</strong> <a href="https://www.youtube.com/@techwithtaf/playlists">Tech with Tafara</a></p>
 </section>
 
+<!-- Robust Visitor Counter Script -->
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     const visitorCountElement = document.getElementById("visitor-count");
-
-    async function fetchVisitorCount() {
-      try {
-        const response = await fetch("https://63ykatqjy6om6a26n26jvj772q0rayxx.lambda-url.af-south-1.on.aws/");
-        const data = await response.json();
-        visitorCountElement.textContent = data.views;
-      } catch (error) {
-        console.error("Error fetching views:", error);
+    let attempts = 0;
+    function showUnavailable() {
         visitorCountElement.textContent = "Unavailable";
-      }
     }
-
-    fetchVisitorCount(); // Call on page load
+    async function fetchVisitorCount() {
+        try {
+            const controller = new AbortController();
+            const timeout = setTimeout(() => controller.abort(), 4000); // 4s timeout
+            const response = await fetch(
+                "https://63ykatqjy6om6a26n26jvj772q0rayxx.lambda-url.af-south-1.on.aws/",
+                { signal: controller.signal }
+            );
+            clearTimeout(timeout);
+            if (!response.ok) throw new Error("Network response not ok");
+            const data = await response.json();
+            if (typeof data.views === "number" || typeof data.views === "string") {
+                visitorCountElement.textContent = data.views;
+            } else {
+                showUnavailable();
+            }
+        } catch (error) {
+            attempts++;
+            if (attempts < 2) {
+                // Try again once
+                setTimeout(fetchVisitorCount, 2000);
+            } else {
+                showUnavailable();
+            }
+        }
+    }
+    fetchVisitorCount();
   });
 </script>
-    
+</body>
+</html>
