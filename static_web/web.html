@@ -318,23 +318,31 @@
     async function fetchVisitorCount() {
         try {
             const controller = new AbortController();
-            const timeout = setTimeout(() => controller.abort(), 4000); // 4s timeout
+            const timeout = setTimeout(() => controller.abort(), 4000);
             const response = await fetch(
                 "https://63ykatqjy6om6a26n26jvj772q0rayxx.lambda-url.af-south-1.on.aws/",
                 { signal: controller.signal }
             );
             clearTimeout(timeout);
             if (!response.ok) throw new Error("Network response not ok");
+            
             const data = await response.json();
-            if (typeof data.views === "number" || typeof data.views === "string") {
-                visitorCountElement.textContent = data.views;
+
+            // Parse body if it's a stringified JSON
+            let bodyData = data;
+            if (typeof data.body === "string") {
+                bodyData = JSON.parse(data.body);
+            }
+
+            const count = bodyData.views;
+            if (typeof count === "number" || typeof count === "string") {
+                visitorCountElement.textContent = count;
             } else {
                 showUnavailable();
             }
         } catch (error) {
             attempts++;
             if (attempts < 2) {
-                // Try again once
                 setTimeout(fetchVisitorCount, 2000);
             } else {
                 showUnavailable();
@@ -344,5 +352,3 @@
     fetchVisitorCount();
   });
 </script>
-</body>
-</html>
