@@ -300,18 +300,20 @@
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    fetch("https://63ykatqjy6om6a26n26jvj772q0rayxx.lambda-url.af-south-1.on.aws/") // ✅ Replace with actual endpoint
-      .then(response => response.json())
-      .then(data => {
-        document.getElementById("visitor-count").textContent = data.views;
-      })
-      .catch(error => {
+    const visitorCountElement = document.getElementById("visitor-count");
+
+    async function fetchVisitorCount() {
+      try {
+        const response = await fetch("https://63ykatqjy6om6a26n26jvj772q0rayxx.lambda-url.af-south-1.on.aws/");
+        const data = await response.json();
+        visitorCountElement.textContent = data.views;
+      } catch (error) {
         console.error("Error fetching views:", error);
-      });
+        visitorCountElement.textContent = "Unavailable";
+      }
+    }
+
+    fetchVisitorCount(); // Call on page load
   });
 </script>
-
-
-
-    updateCounter(); // Call the function to update the visitor count
-</script>
+    
